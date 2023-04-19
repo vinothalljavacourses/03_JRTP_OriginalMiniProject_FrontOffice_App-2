@@ -21,4 +21,9 @@ public class UserController {
 	  return "unlock";
   }
   
+  @GetMapping("/forgot")
+  public String forgotPasswordPage() {
+	  return "forgotPwd";
+  }
+  
 }
