@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8" />
@@ -81,35 +81,50 @@
 											alt="logo">
 										<h4 class="mt-1 mb-5 pb-1">Unlock your account here</h4>
 									</div>
+									<p th:text="${successMessage}" class="text-success">
+									<p th:text="${errorMessage}" class="text-danger">
+									<form th:action="@{/unlock}" th:object="${unlockuser}"
+										method="POST">
 
-									<form>
-
-										<div class="form-outline mb-6">
-											<h6>Your Email : vinronric@gmail.com</h6>
+										<div class="form-outline mb-4">
+											<h6>
+												Your Email :
+												<p th:text="${unlockuser.userEmail}" class="text-success">
+											</h6>
+										</div>
+										<div class="form-outline mb-4">
+											<input type="hidden" id="form2Example22" class="form-control"
+												th:field="*{userEmail}" />
+										</div>
+										<div class="form-outline mb-4">
+											<input type="password" id="form2Example22"
+												class="form-control" th:field="*{temporaryPassword}" /> <label
+												class="form-label" for="form2Example22">Temporary
+												Password</label>
+											<div class="text-danger"
+												th:if="${#fields.hasErrors('temporaryPassword')}"
+												th:errors="*{temporaryPassword}"></div>
 										</div>
 
 										<div class="form-outline mb-4">
-											<input type="password" id="form2Example22"
-												class="form-control" /> <label class="form-label"
-												for="form2Example22">Temporary Password</label>
+											<input type="password" id="form2Example23"
+												class="form-control" th:field="*{newPassword}" /> <label
+												class="form-label" for="form2Example23">New Password</label>
+											<div class="text-danger"
+												th:if="${#fields.hasErrors('newPassword')}"
+												th:errors="*{newPassword}"></div>
 										</div>
 
 										<div class="form-outline mb-4">
-											<input type="password" id="form2Example22"
-												class="form-control" /> <label class="form-label"
-												for="form2Example22">New Password</label>
-										</div>
-										
-										<div class="form-outline mb-4">
-											<input type="password" id="form2Example22"
-												class="form-control" /> <label class="form-label"
-												for="form2Example22">Confirm Password</label>
+											<input type="password" id="form2Example24"
+												class="form-control" th:field="*{confirmPassword}" /> <label
+												class="form-label" for="form2Example24">Confirm
+												Password</label>
 										</div>
 
 										<div class="text-center pt-1 mb-5 pb-1">
-											<button
-												class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-												type="button">Unlock</button>
+											<input type="submit" value="UNLOCK"
+												class="btn btn-outline-danger" />
 										</div>
 
 										<div

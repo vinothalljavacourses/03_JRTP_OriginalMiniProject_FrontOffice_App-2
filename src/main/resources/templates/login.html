@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8" />
@@ -81,26 +81,28 @@
 											alt="logo">
 										<h4 class="mt-1 mb-5 pb-1"></h4>
 									</div>
-
-									<form>
+                                    <p th:text="${errorMessage}" class="text-danger">
+									<form th:action="@{/login}" th:object="${user}" method="POST">
 										<p>Please login to your account</p>
 
 										<div class="form-outline mb-4">
-											<input type="email" id="form2Example11" class="form-control"
-												placeholder="Phone number or email address" /> <label
+											<input type="email" th:field="*{userName}" id="form2Example11" class="form-control"
+												placeholder="email address" /> <label
 												class="form-label" for="form2Example11">Username</label>
+										 <p  class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" />
 										</div>
 
 										<div class="form-outline mb-4">
-											<input type="password" id="form2Example22"
+											<input type="password" th:field="*{userPassword}" id="form2Example22"
 												class="form-control" /> <label class="form-label"
 												for="form2Example22">Password</label>
+											<p class="text-danger" th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}"/>
 										</div>
 
 										<div class="text-center pt-1 mb-5 pb-1">
-											<a href="dashboard"
-												class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-												type="button">Log in</a>
+											<div class="text-center pt-1 mb-5 pb-1">
+											  <input type="submit" value="Log In" class="btn btn-outline-danger" />
+										    </div>
 											<a class="text-muted" href="forgot">Forgot password?</a>
 										</div>
 

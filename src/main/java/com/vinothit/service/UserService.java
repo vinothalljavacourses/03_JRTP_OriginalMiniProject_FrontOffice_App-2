@@ -7,8 +7,8 @@ import com.vinothit.binding.UnlockForm;
 public interface UserService {
 	
 	public String login(LoginForm loginform);
-	public String signup(SignUpform signUpform);
-	public String unlock(UnlockForm unlockForm);
-	public String forgotPassword(String emailId);
+	public boolean signup(SignUpform signUpform);
+	public boolean unlockAccount(UnlockForm unlockForm);
+	public boolean forgotPassword(String email);
 
 }

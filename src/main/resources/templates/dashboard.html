@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8" />
@@ -36,42 +36,45 @@
 					<li class="nav-item"><a class="nav-link" href="viewenquires">View
 							Enquiries</a></li>
 				</ul>
-				<a href="/" class="btn btn-danger">Logout</a>
+				<a href="/signout" class="btn btn-danger">Logout</a>
 			</div>
 		</div>
 	</nav>
 	<!-- Start your project here-->
-
-
-	<section class="h-100 gradient-form" style="background-color: #eee;">
 		<div class="container py-5 h-100">
-			<div
-				class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-xl-10">
-					<div class="card rounded-3 text-black">
-						<div class="row g-0">
-							<div class="col-lg-6">
-								<div class="card-body p-md-5 mx-md-4">
+			<h2>Logged In User Name :</h2>
+			<p th:text="${dashboardUserData.loggedUserName}" class="text-success"></p>
+		</div>
+		<section class="h-100 gradient-form" style="background-color: #eee;">
+			<div class="container py-5 h-100">
+				<div
+					class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-xl-10">
+						<div class="card rounded-3 text-black">
+							<div class="row g-0">
+								<div class="col-lg-6">
+									<div class="card-body p-md-5 mx-md-4">
 
-									<div class="text-center">
-										<h4 class="mt-1 mb-5 pb-1">Your Performance</h4>
+										<div class="text-center">
+											<h4 class="mt-1 mb-5 pb-1">Your Performance</h4>
+										</div>
+
+										<h2>Total Enquiries : <p th:text="${dashboardUserData.totalEnquiries}"></p></h2>
+										<h2 class="text-success">Enrolled : <p th:text="${dashboardUserData.enrolledCount}"></p></h2>
+										<h2 class="text-danger">Lost : <p th:text="${dashboardUserData.LostCount}"></p></h2>
+
 									</div>
-
-									<h2>Total Enquiries : 256 </h2>
-									<h2 class="text-success">Enrolled : 84 </h2>
-									<h2 class="text-danger">Lost : 172</h2>
-
 								</div>
-							</div>
-							<div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-								<img alt="" src="images/lady.jpg" width="50%"  height="90%">
+								<div
+									class="col-lg-6 d-flex align-items-center gradient-custom-2">
+									<img alt="" src="images/lady.jpg" width="50%" height="90%">
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	<!-- End your project here-->
 
 	<!-- MDB -->

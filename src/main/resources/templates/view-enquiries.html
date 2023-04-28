@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8" />
@@ -56,40 +56,42 @@
 									<div class="text-center">
 										<h4 class="mt-1 mb-5 pb-1">View Student Enquiries</h4>
 									</div>
+                                    <form th:action="@{/filterenquiry}" th:object="${stundentenquiry}" method="POST">
+										<div class="row">
+											<div class="col-md-4 form-outline mb-4">
+												<label class="form-label" for="form2Example21">Course</label>
+												<select id="form2Example21" th:field="*{courseName}"
+													class="form-select">
+													<option value="">-Select-</option>
+													<option th:each="course : ${courses}" th:value="${course}"
+														th:text="${course}"></option>
+												</select>
 
-									<div class="row">
-										<div class="col-md-4 form-outline mb-4">
-											<label class="form-label" for="form2Example22">Course
-											</label> <select id="form2Example22" class="form-select">
-												<option>-Select-</option>
-												<option>Java Fullstack</option>
-												<option>DevOps</option>
-												<option>AWS</option>
-											</select>
+											</div>
+											<div class="col-md-4 form-outline mb-4">
+												<label class="form-label" for="form2Example22">Enquiry
+													Status</label> 
+													<select th:field="*{enquiryStatus}"
+													id="form2Example22" class="form-select">
+													<option value="">-Select-</option>
+													<option th:each="enqstatus : ${enquiryStatus}"
+														th:value="${enqstatus}" th:text="${enqstatus}"></option>
+												</select>
+											</div>
+
+
+											<div class="col-md-4 form-outline mb-4">
+												<label class="form-label" for="form2Example23">Class
+													Mode </label> 
+													<select id="form2Example23" class="form-select">
+													<option value="">-Select-</option>
+													<option value="Online">Online</option>
+													<option value="Classroom">Classroom</option>
+												</select>
+											</div>
+
 										</div>
-
-										<div class="col-md-4 form-outline mb-4">
-											<label class="form-label" for="form2Example22">Enquiry
-												Status</label> <select id="form2Example22" class="form-select">
-												<option>-Select-</option>
-												<option>New</option>
-												<option>Enrolled</option>
-												<option>Lost</option>
-											</select>
-										</div>
-
-
-										<div class="col-md-4 form-outline mb-4">
-											<label class="form-label" for="form2Example22">Class
-												Mode </label> <select id="form2Example22" class="form-select">
-												<option>-Select-</option>
-												<option>Online</option>
-												<option>Classroom</option>
-											</select>
-										</div>
-
-									</div>
-
+									</form>
 
 
 
@@ -105,33 +107,15 @@
 												<th scope="col">Action</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody th:each="enquiry : ${viewAllEnquiries}">
 											<tr>
-												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Java Fullsack</td>
-												<td>+91 - 79797979</td>
-												<td>13-Mar-2023</td>
-												<td>New</td>
-												<td><a href="addenquiry" class="btn btn-primary">Edit</a></td>
-											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>Steve</td>
-												<td>DevOps</td>
-												<td>+91 - 79797979</td>
-												<td>12-Mar-2023</td>
-												<td>Enrolled</td>
-												<td><a href="addenquiry" class="btn btn-primary">Edit</a></td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<td>David</td>
-												<td>React JS</td>
-												<td>+91 - 79797979</td>
-												<td>11-Mar-2023</td>
-												<td>Lost</td>
-												<td><a href="addenquiry" class="btn btn-primary">Edit</a></td>
+											    <td th:text="${enquiry.enquiryId}" />
+												<td th:text="${enquiry.studentName}" />
+												<td th:text="${enquiry.courseName}" />
+												<td th:text="${enquiry.phoneNumber}" />
+												<td th:text="${enquiry.createdDate}" />
+												<td th:text="${enquiry.enquiryStatus}" />
+												<td><a th:href="@{'/editenquiry?enquiryId=' + ${enquiry.enquiryId}}">Edit</a></td>
 											</tr>
 										</tbody>
 									</table>
