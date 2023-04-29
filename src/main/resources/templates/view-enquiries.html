@@ -17,6 +17,43 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
 <!-- MDB -->
 <link rel="stylesheet" href="css/bootstrap-login-form.min.css" />
+<!-- JQUERY AJAX FOR DROPDOWNS -->
+<script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+ $(document).ready(function() {
+	 $(".form-select").on("change", function(e){
+		 
+		 //testing purpose only
+		 //var cname=$("#cname").val();
+		 //console.log("Course : " + cname);
+		 //var status=$("#status").val();
+		 //console.log("status : " + status);
+		 //var mode=$("#mode").val();
+		 //console.log("mode : " + mode);
+		 
+		 // call AJAX to send the request to controller to process
+		 $.ajax({
+			type: "GET",
+			url: "filter-enquiries",
+			data :{
+				cname : $("#cname").val(),
+				status :$("#status").val(),
+				mode : $("#mode").val()
+			},
+		   success : function(result){
+			 //console.log(result); 
+			 $("#enquiryTable").hide();
+			 $("#filterResultTable").html(result);
+			 
+		   }
+			 
+		 });
+		 
+	 });
+ });
+ 
+</script>
 
 </head>
 
@@ -56,46 +93,36 @@
 									<div class="text-center">
 										<h4 class="mt-1 mb-5 pb-1">View Student Enquiries</h4>
 									</div>
-                                    <form th:action="@{/filterenquiry}" th:object="${stundentenquiry}" method="POST">
-										<div class="row">
-											<div class="col-md-4 form-outline mb-4">
-												<label class="form-label" for="form2Example21">Course</label>
-												<select id="form2Example21" th:field="*{courseName}"
-													class="form-select">
-													<option value="">-Select-</option>
-													<option th:each="course : ${courses}" th:value="${course}"
-														th:text="${course}"></option>
-												</select>
-
-											</div>
-											<div class="col-md-4 form-outline mb-4">
-												<label class="form-label" for="form2Example22">Enquiry
-													Status</label> 
-													<select th:field="*{enquiryStatus}"
-													id="form2Example22" class="form-select">
-													<option value="">-Select-</option>
-													<option th:each="enqstatus : ${enquiryStatus}"
-														th:value="${enqstatus}" th:text="${enqstatus}"></option>
-												</select>
-											</div>
-
-
-											<div class="col-md-4 form-outline mb-4">
-												<label class="form-label" for="form2Example23">Class
-													Mode </label> 
-													<select id="form2Example23" class="form-select">
-													<option value="">-Select-</option>
-													<option value="Online">Online</option>
-													<option value="Classroom">Classroom</option>
-												</select>
-											</div>
-
+									<div class="row">
+										<div class="col-md-4 form-outline mb-4">
+											<label class="form-label" for="form2Example21">Course</label>
+											<select id="cname" class="form-select">
+												<option value="">-Select-</option>
+												<option th:each="course : ${courses}" th:value="${course}"
+													th:text="${course}"></option>
+											</select>
 										</div>
-									</form>
-
-
-
-									<table class="table table-striped table-bordered table-hover">
+										<div class="col-md-4 form-outline mb-4">
+											<label class="form-label" for="form2Example22">Enquiry Status</label>
+											<select id="status" class="form-select">
+												<option value="">-Select-</option>
+												<option th:each="enqstatus : ${enquiryStatus}"
+													th:text="${enqstatus}"></option>
+											</select>
+										</div>
+										<div class="col-md-4 form-outline mb-4">
+											<label class="form-label" for="form2Example23">Class Mode</label> 
+											<select id="mode" class="form-select">
+												<option value="">-Select-</option>
+												<option value="Online">Online</option>
+												<option value="Classroom">Classroom</option>
+											</select>
+										</div>
+									</div>
+									<div id="filterResultTable">
+									</div>
+                                    <!-- NOT USING AJAX DOM Manupulation -->
+									<table class="table table-striped table-bordered table-hover" id="enquiryTable">
 										<thead>
 											<tr>
 												<th scope="col">#</th>
@@ -107,9 +134,10 @@
 												<th scope="col">Action</th>
 											</tr>
 										</thead>
-										<tbody th:each="enquiry : ${viewAllEnquiries}">
-											<tr>
-											    <td th:text="${enquiry.enquiryId}" />
+										<tbody id="table-body">
+											<tr th:each="enquiry : ${viewAllEnquiries}">
+											    <!--  <td th:text="${enquiry.enquiryId}" /> -->
+											    <td th:text="${enquiryStat.index} + 1" />
 												<td th:text="${enquiry.studentName}" />
 												<td th:text="${enquiry.courseName}" />
 												<td th:text="${enquiry.phoneNumber}" />

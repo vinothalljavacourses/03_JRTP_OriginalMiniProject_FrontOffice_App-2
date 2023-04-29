@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vinothit.binding.DashboardResponseForm;
 import com.vinothit.binding.EnquiryForm;
+import com.vinothit.binding.EnquirySearchCriteriaForm;
 import com.vinothit.binding.LoginForm;
 import com.vinothit.entity.StudentEnquiryEntity;
 import com.vinothit.service.EnquiryService;
@@ -129,5 +130,57 @@ public class EnquiryController {
 		return "add-enquiry";
 	}
 	
+	 // call AJAX to send the request to controller to process
+	@GetMapping("/filter-enquiries")
+	public String getFilteredEnquiriesOnChange(@RequestParam String cname, 
+			                                   @RequestParam String status, 
+			                                   @RequestParam String mode, Model model) {
+		
+		EnquirySearchCriteriaForm enquirySearchCriteriaForm=new EnquirySearchCriteriaForm();
+		enquirySearchCriteriaForm.setCourse(cname);
+		enquirySearchCriteriaForm.setEnquiryStatus(status);
+		enquirySearchCriteriaForm.setClassMode(mode);
+		
+		System.out.println("enquirySearchCriteriaForm : " + enquirySearchCriteriaForm);
+		
+		Integer loggedInUser = (Integer) session.getAttribute("userid");
+		
+		List<StudentEnquiryEntity> filteredEnquiries = enquiryService.getFilteredEnquiries(enquirySearchCriteriaForm, loggedInUser);
+		
+		//System.out.println("filteredEnquiries : " +  filteredEnquiries);
+		model.addAttribute("filteredEnquiries", filteredEnquiries);
+		
+		return "filter-enquiries-page";
+	}
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -195,6 +197,46 @@ public class EnquiryServiceImpl implements EnquiryService {
 		return enquiryForm;
 	}
 
+	@Override
+	public List<StudentEnquiryEntity> getFilteredEnquiries(EnquirySearchCriteriaForm criteria, Integer userId) {
+		
+		Optional<UserDetailsEntity> findById = userDetailsRepository.findById(userId);
+		
+		if(findById.isPresent()) {
+			UserDetailsEntity userDetailsEntity = findById.get();
+			List<StudentEnquiryEntity> enquiries = userDetailsEntity.getEnquiries();
+			
+			//Java 8 Stream filter logic filter logic for course
+			if(criteria.getCourse() != null & !criteria.getCourse().equals("")) {
+				
+				enquiries = enquiries.stream()
+				         .filter(e -> e.getCourseName().equals(criteria.getCourse()))
+				         .collect(Collectors.toList());
+			}
+			
+			//Java 8 Stream filter logic filter logic for course
+			if(criteria.getEnquiryStatus() != null & !criteria.getEnquiryStatus().equals("")){
+				enquiries = enquiries.stream()
+				         .filter(e -> e.getEnquiryStatus().equals(criteria.getEnquiryStatus()))
+				         .collect(Collectors.toList());
+			}
+			
+			//Java 8 Stream filter logic filter logic for mode
+			if(criteria.getClassMode() != null & !criteria.getClassMode().equals("")) {
+				enquiries = enquiries.stream()
+				         .filter(e -> e.getClassMode().equals(criteria.getClassMode()))
+				         .collect(Collectors.toList());
+			}
+			
+			return enquiries;
+		}
+		
+		return null;
+	}
+
+	
+	
+	
 	
 
 }

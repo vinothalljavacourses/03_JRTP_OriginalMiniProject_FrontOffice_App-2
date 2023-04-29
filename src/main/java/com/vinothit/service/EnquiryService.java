@@ -18,5 +18,6 @@ public interface EnquiryService {
 	public boolean saveEnquriry(EnquiryForm EnquiryForm);
 	public List<StudentEnquiryEntity> viewStudentEnquries();
 	public EnquiryForm editEnquiry(Integer enquiryId);
+	public List<StudentEnquiryEntity> getFilteredEnquiries(EnquirySearchCriteriaForm criteria, Integer userId);
 
 }
